@@ -1,3 +1,4 @@
+# PLEASE USE https://github.com/deakin-launchpad/deakin-backend-boilerplate.git INSTEAD. THIS WILL BE DEPRECATED AT THE END OF JANUARY. UPDATES WILL NOT BE PUSHED THEREAFTER AND THE REPO WILL BE ARCHIVED.
 
 # Node.js getting started application
 The Getting Started tutorial for Node.js uses this sample application to provide you with a sample workflow for working with any Node.js app on IBM Cloud or in IBM Cloud Private; you set up a development environment, deploy an app locally and on the cloud, and then integrate a IBM Cloud database service in your app.
