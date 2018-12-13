@@ -8,9 +8,9 @@ var Hapi = require('hapi');
 
 //Internal Dependencies
 var Config = require('./Config');
-// var Routes = require('./Routes');
 var Plugins = require('./Plugins');
-// var Service = require('./Services');
+var SocketManager = require('./Lib/SocketManager');
+
 
 //Create Server
 var server = new Hapi.Server({
@@ -44,8 +44,6 @@ server.route(
     }
 );
 
-//API Routes
-//server.route(Routes);
 
 //Adding Views
 server.views({
@@ -56,6 +54,7 @@ server.views({
     path: './Views'
 });
 
+SocketManager.connectSocket(server);
 
 server.on('response', function (request) {
     console.log(request.info.remoteAddress + ': ' + request.method.toUpperCase() + ' ' + request.url.path + ' --> ' + request.response.statusCode);
