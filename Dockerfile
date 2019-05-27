@@ -1,14 +1,12 @@
-FROM node:6-alpine
+FROM node:10 
 
-ADD views /app/views
-ADD package.json /app
-ADD server.js /app
+WORKDIR /app 
+COPY . . 
 
-RUN cd /app; npm install
+EXPOSE 8000
 
-ENV NODE_ENV production
-ENV PORT 8080
-EXPOSE 8080
+RUN npm install -g nodemon 
+RUN npm install 
+RUN cp .env.example .env
 
-WORKDIR "/app"
 CMD [ "npm", "start" ]
