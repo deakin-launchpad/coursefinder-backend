@@ -16,7 +16,7 @@ var sendError = function (data) {
     console.trace('ERROR OCCURED ', data)
     if (typeof data == 'object' && data.hasOwnProperty('statusCode') && data.hasOwnProperty('customMessage')) {
         console.log('attaching resposnetype',data.type)
-        var errorToSend = Boom.create(data.statusCode, data.customMessage);
+        var errorToSend = new Boom( data.customMessage,{statusCode:data.statusCode});
         errorToSend.output.payload.responseType = data.type;
         return errorToSend;
     } else {
@@ -51,7 +51,7 @@ var sendError = function (data) {
             customErrorMessage = customErrorMessage && customErrorMessage.replace('[', '');
             customErrorMessage = customErrorMessage && customErrorMessage.replace(']', '');
         }
-        return Boom.create(400,customErrorMessage)
+        return new Boom(customErrorMessage,{statusCode:400})
     }
 };
 

@@ -2,32 +2,37 @@
 /**
  * Created by Navit
  */
-var Good = require('good');
+var good = require('good');
+
+const goodOptions = {
+    ops: {
+        interval: 1000
+    },
+    reporters: {
+        myConsoleReporter: [
+            {
+                module: '@hapi/good-squeeze',
+                name: 'Squeeze',
+                args: [{ log: '*', response: '*' }]
+            },
+            {
+                module: '@hapi/good-console'
+            },
+            'stdout'
+        ]
+    }
+};
 
 //Register Good Console
-
-exports.register = function(server, options, next){
-
+exports.register = function (server, options) {
     server.register({
-        register: Good,
-        options: {
-            reporters: [{
-                reporter: require('good-console'),
-                events: {
-                    response: '*',
-                    log: '*'
-                }
-            }]
-        }
-    }, function (err) {
+        plugin: good,
+        goodOptions
+    }, {}, function (err) {
         if (err) {
             throw err;
         }
     });
-
-    next();
 };
 
-exports.register.attributes = {
-    name: 'good-console-plugin'
-};
+exports.name = 'good-console-plugin';

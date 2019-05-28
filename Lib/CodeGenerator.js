@@ -42,41 +42,6 @@ exports.generateUniqueCode = function (noOfDigits,userRole, callback) {
 
 };
 
-exports.generateUniqueReferralCode = function (noOfDigits,userRole, callback) {
-    noOfDigits = noOfDigits || 5;
-    var excludeArray = [];
-    var generatedRandomCode = null;
-    async.series([
-        function (cb) {
-            //Push All generated codes in excludeAry
-            if (userRole == UniversalFunctions.CONFIG.APP_CONSTANTS.DATABASE.USER_ROLES.INVITED_USER)
-            {
-                Services.InvitedUserService.getAllGeneratedReferralCodes(function (err, dataAry) {
-                    if (err){
-                        cb(err);
-                    }else {
-                        if (dataAry && dataAry.length > 0){
-                            excludeArray = dataAry
-                        }
-                        cb();
-                    }
-                })
-            }else {
-                cb(UniversalFunctions.CONFIG.APP_CONSTANTS.STATUS_MSG.ERROR.IMP_ERROR)
-            }
-        }, function (cb) {
-            //Generate Random Code of digits specified
-            generatedRandomCode = generateRandomNumbers(noOfDigits,excludeArray);
-            cb();
-
-        }], function (err, data) {
-        callback(err,{number : generatedRandomCode})
-    });
-
-
-};
-
-
 var generateRandomNumbers = function (numberLength, excludeList) {
     var arrayList = [];
     excludeList = excludeList || [];
