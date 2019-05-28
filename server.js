@@ -20,7 +20,6 @@ const init = async () => {
             name: Config.APP_CONSTANTS.SERVER.appName
         },
         port: Config.APP_CONSTANTS.SERVER.PORTS.HAPI,
-        host: 'localhost',
         routes: { cors: true }
     });
 
