@@ -19,7 +19,7 @@ const init = async () => {
         app: {
             name: Config.APP_CONSTANTS.SERVER.appName
         },
-        port: Config.APP_CONSTANTS.SERVER.PORTS.HAPI,
+        port: process.env.PORT || Config.APP_CONSTANTS.SERVER.PORTS.HAPI,
         routes: { cors: true }
     });
 

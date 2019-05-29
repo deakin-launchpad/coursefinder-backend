@@ -1,12 +1,10 @@
-FROM node:10 
+FROM node:10
 
-WORKDIR /app 
-COPY . . 
+WORKDIR /app
+COPY . .
 
 EXPOSE 8000
 
-RUN npm install -g nodemon 
-RUN npm install 
-RUN cp .env.example .env
+RUN npm install
 
-CMD [ "npm", "start" ]
+CMD ["npm","start"]
