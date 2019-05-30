@@ -3,5 +3,6 @@
  */
 "use strict";
 module.exports = {
-  DemoBaseController: require("./demoController/demoBaseController")
+  DemoBaseController: require("./demoController/demoBaseController"),
+  StudentController: require('./studentControllers')
 };
