@@ -4,5 +4,6 @@
 'use strict'
 
 var DemoBaseRoute = require('./demoRoute/demoBaseRoute');
-var APIs = [].concat(DemoBaseRoute);
+const StudentRoutes = require('./studentRoutes')
+var APIs = [].concat(DemoBaseRoute, StudentRoutes);
 module.exports = APIs;
