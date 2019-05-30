@@ -65,7 +65,7 @@ var sendSuccess = function (successMsg, data) {
 
     }
 };
-var failActionFunction = function (request, reply, source, error) {
+var failActionFunction = function (request, h, error) {
     var customErrorMessage = '';
     if (error.output.payload.message.indexOf("[") > -1) {
         customErrorMessage = error.output.payload.message.substr(error.output.payload.message.indexOf("["));
@@ -77,7 +77,8 @@ var failActionFunction = function (request, reply, source, error) {
     customErrorMessage = customErrorMessage.replace(']', '');
     error.output.payload.message = customErrorMessage;
     delete error.output.payload.validation
-    return reply(error);
+    console.log(error)
+    return error
 };
 
 var authorizationHeaderObj = Joi.object({
