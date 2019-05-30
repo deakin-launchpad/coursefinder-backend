@@ -1,18 +1,73 @@
 # Node.js getting started application
-The Getting Started tutorial for Node.js uses this sample application to provide you with a sample workflow for working with any Node.js app on IBM Cloud or in IBM Cloud Private; you set up a development environment, deploy an app locally and on the cloud, and then integrate a IBM Cloud database service in your app.
+The Getting Started tutorial for Node.js uses this sample application to provide you with a sample workflow for working with any Node.js app
 
-The Node.js app uses [Hapi Framework](https://hapijs.com) and [Cloudant noSQL DB service](https://console.bluemix.net/catalog/services/cloudant-nosql-db) to add information to a database and then return information from a database to the UI. To learn more about how the app connects to Cloudant, see the [Cloudant library for Node.js](https://www.npmjs.com/package/cloudant).
+The Node.js app uses [Hapi Framework](https://hapijs.com)
 
+## Setup Node.js
 
-## Before you begin
+Inorder to setup NodeJS you need to fellow the current steps:
 
-You'll need a [IBM Cloud account](https://console.ng.bluemix.net/registration/), [Git](https://git-scm.com/downloads), [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads), and [Node](https://nodejs.org/en/) installed. If you use [IBM Cloud Private](https://www.ibm.com/cloud-computing/products/ibm-cloud-private/), you need access to the [IBM Cloud Private Cloud Foundry](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_2.1.0/cloud_foundry/overview.html) environment.
+### Mac OS X
 
-## Instructions
+* Step1: Install Home brew
 
-**IBM Cloud Cloud Foundry**: [Getting started tutorial for Node.js](https://console.bluemix.net/docs/runtimes/nodejs/getting-started.html).
+```
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+$ brew -v
+```
 
-**IBM Cloud Kubernetes Service**: [README-kubernetes.md](README-kubernetes.md)
+* Step2: Install Node using Brew
 
-**IBM Cloud Private**: The starter application for IBM Cloud Private guides you through a similar process. However, instead of hosting both your service and application in the same cloud environment, you use a user-provided service. This guide shows you how to deploy your application to IBM Cloud Private and bind it to a Cloudant Database in IBM Cloud. For the complete procedure, see [Working with user-provided services and the Node.js starter app](https://www.ibm.com/support/knowledgecenter/SSBS6K_2.1.0/cloud_foundry/buildpacks/buildpacks_using_nodejsapp.html).
+```
+$ brew install node
+
+$ node -v
+
+$ npm -v
+```
+
+### Linux Systems
+
+* Step1: Install Node using apt-get
+
+```
+$ sudo apt-get install curl python-software-properties
+
+$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+
+$ sudo apt-get install nodejs
+
+$ node -v
+
+$ npm -v
+```
+## Setup Node Backend Boilerplate Application
+
+* Step1: Git clone the application
+
+```
+$ git clone https://github.com/deakin-launchpad/node-backend-boilerplate.git
+
+$ cd node-backend-boilerplate
+```
+
+* Step2: Install node modules
+
+```
+$ npm i
+
+or 
+
+$ npm install
+```
+
+* Step3: Start the application
+
+```
+For Development Mode
+
+$ npm run start
+```
+
+The current version of your application would be running on **http://localhost:8000** or **http://IP_OF_SERVER:8000** (in case you are running on the server)
