@@ -11,8 +11,15 @@ var Config = require('./Config');
 var Plugins = require('./Plugins');
 var SocketManager = require('./Lib/SocketManager');
 var Routes = require('./Routes')
+const DBHELPER = require('./Utils/dbHelper')
+const debug = require('debug')('app:server')
 
 const init = async () => {
+
+    //Start database
+    await DBHELPER.establishConnection(Config.DBCONFIG, (err) => {
+        if(err) return;
+    })
 
     //Create Server
     var server = new Hapi.Server({
@@ -59,13 +66,13 @@ const init = async () => {
     SocketManager.connectSocket(server);
 
     server.events.on('response', function (request) {
-        console.log(request.info.remoteAddress + ': ' + request.method.toUpperCase() + ' ' + request.url.pathname + ' --> ' + request.response.statusCode);
-        console.log('Request payload:', request.payload);
+        debug(request.info.remoteAddress + ': ' + request.method.toUpperCase() + ' ' + request.url.pathname + ' --> ' + request.response.statusCode);
+        debug('Request payload:', request.payload);
     });
 
     // Start Server
     await server.start();
-    console.log('Server running on %s', server.info.uri);
+    debug('Server running on %s', server.info.uri);
 };
 
 process.on('unhandledRejection', (err) => {
