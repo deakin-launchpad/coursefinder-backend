@@ -9,16 +9,18 @@ var registerStudent = function(payloadData, callback) {
   var userData;
   async.series([
     function(cb){
+      userData = payloadData
       SERVICES.STUDENTSERVICE.createRecord(payloadData,function(err,data){
         if(err) cb(err)
         else {
-          cb(null,data)
+          userData = data
+          cb()
         }
       })
     }
   ],function(err,result){
-    if(err) callback(err)
-    else callback(null,result)
+    if(err) return callback(err)
+    else return callback(null,userData)
   })
 
 };
