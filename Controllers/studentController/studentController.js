@@ -25,7 +25,7 @@ const registerStudent = function (payloadData, callback) {
     function (cb) {
       userData = payloadData
       userData.password = UniversalFunctions.CryptData(userData.password)
-      SERVICES.STUDENTSERVICE.createRecord(payloadData, function (err, data) {
+      SERVICES.STUDENTSERVICE.createRecord(userData, function (err, data) {
         if (err) cb(err)
         else {
           userData = data
@@ -64,11 +64,19 @@ const studentLogin = function (payloadData, callback) {
 const getAllStudents = function (callback) {
   const criteria = {}
   const projections = {
-    '_id': 0,
-    'password': 0
+    'password': 0,
+    '__v':0
+  }
+  var path="interestedCourses"
+  var select=""
+  var populate = {
+    path:path,
+    match:{},
+    select:select,
+    options:{lean:true}
   }
 
-  SERVICES.STUDENTSERVICE.getRecord(criteria, projections, {}, (err, data) => {
+  SERVICES.STUDENTSERVICE.populatedRecords(criteria, projections,populate,{}, {}, (err, data) => {
     if (err) return callback(err)
 
     else if (data && data.length > 0) return callback(null, data)
@@ -81,10 +89,18 @@ const getStudent = function (payloadData, callback) {
   var userData = payloadData
   const criteria = { _id: payloadData }
   const projections = {
-    '_id': 0,
-    'password': 0
+    'password': 0,
+    '__v': 0
   }
-  SERVICES.STUDENTSERVICE.getRecord(criteria, projections, {}, (err, data) => {
+  var path="interestedCourses"
+  var select=""
+  var populate = {
+    path:path,
+    match:{},
+    select:select,
+    options:{lean:true}
+  }
+  SERVICES.STUDENTSERVICE.populatedRecords(criteria, projections,populate,{}, {}, (err, data) => {
     if (err) return callback(err)
 
     else if (data && data.length > 0) return callback(null, data)
@@ -126,10 +142,54 @@ const updateStudent = function(payloadData, callback){
   })
 }
 
+const updateStudentCourseinterests = function(id,payloadData, callback){
+  var userData = payloadData;
+  
+  if (id.match(/^[0-9a-fA-F]{24}$/)) {
+    console.log('[COURSES]',typeof id)
+
+  }
+  async.series([
+
+    function (cb) {
+      const criteria = { _id: id }
+      SERVICES.STUDENTSERVICE.getRecord(criteria, {}, {}, (err, data) => {
+        if (err) cb(err)
+        else if (data && data.length > 0) cb()
+        else cb(ERROR.USER_NOT_FOUND)
+      })
+    },
+    function (cb) {
+      const criteria = { _id:  userData.interestedCourses }
+      SERVICES.COURSESERVICE.getRecord(criteria, {}, {}, (err, data) => {
+        if (err) cb(err)
+        else if (data && data.length > 0) cb()
+        else cb(ERROR.NOT_FOUND)
+      })
+    },
+    function (cb) {
+      userData = payloadData.interestedCourses
+      const criteria = {_id: id}
+      SERVICES.STUDENTSERVICE.updateRecord(criteria, { $push: { interestedCourses: userData } }, function (err, data) {
+        if (err) cb(err)
+        else {
+          userData = data
+          cb()
+        }
+      })
+    }
+
+  ], function (err, result) {
+    if (err) return callback(err)
+    else return callback(null, userData)
+  })
+}
+
 module.exports = {
   registerStudent: registerStudent,
   studentLogin: studentLogin,
   getAllStudents: getAllStudents,
   getStudent: getStudent,
-  updateStudent: updateStudent
+  updateStudent: updateStudent,
+  updateStudentCourseinterests: updateStudentCourseinterests
 };
