@@ -5,5 +5,6 @@
 module.exports = {
   DemoBaseController: require("./demoController/demoBaseController"),
   StudentController: require('./studentController/studentController'),
-  AgentController: require('./agentController/agentController')
+  AgentController: require('./agentController/agentController'),
+  CourseController: require('./courseController/courseController')
 };
