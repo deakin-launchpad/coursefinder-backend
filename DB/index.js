@@ -1,4 +1,3 @@
-const MODEL = require('../Model')
 const DBSERVICE = require('./databaseService')
 
 const SERVICES = {
