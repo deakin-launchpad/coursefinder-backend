@@ -55,7 +55,7 @@ var registerAgent = {
           .max(16)
           .required(),
         expertise: Joi.array().items(Joi.string()), 
-        interestedStudents: Joi.array().items(Joi.number())
+        interestedStudents: Joi.array().items(Joi.string())
       },
       failAction: UniversalFunctions.failActionFunction
     },
@@ -224,7 +224,7 @@ var updateAgent = {
           .trim()
           .regex(/^[0-9]{9}$/),
           expertise: Joi.array().items(Joi.string()), 
-          interestedStudents: Joi.array().items(Joi.number())
+          interestedStudents: Joi.array().items(Joi.string())
       },
       failAction: UniversalFunctions.failActionFunction
     },
