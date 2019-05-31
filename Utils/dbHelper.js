@@ -13,7 +13,6 @@ function getConnector(db) {
 }
 
 function connectMongoose(db, callback) {
-  console.log('DATABASE')
   var mongoose = require('mongoose');
   mongoose.connect(getConnector(db),
   function (err) {
@@ -36,7 +35,6 @@ function dropMongooseDatabase(callback) {
 }
 
 function establishConnection(db, callback) {
-    console.log('[CONNECTION]',db) 
   switch (db.adapter) {
     case 'mongodb':
       connectMongoose(db, callback);
