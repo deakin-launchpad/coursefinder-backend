@@ -11,7 +11,7 @@ var studentSchema = new Schema({
   email: {type: String, required: true},
   mobile: {type: String, required: true},
   password: {type: String, required: true},
-  interestedCourses: [Number] //Course Id's
+  interestedCourses: [{type:Schema.ObjectId, ref:'course'}] //Course Id's
  
 });
 

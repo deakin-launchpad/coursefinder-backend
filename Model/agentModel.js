@@ -11,7 +11,7 @@ var agentSchema = new Schema({
   mobile: {type: String, required: true},
   password: {type: String, required: true},
   expertise: [{type: String, required: true}], //This should be same as the department
-  interestedStudents: [Number] //Student Id's
+  interestedStudents: [{type:Schema.ObjectId, ref:'student'}] //Student Id's
 });
 
 
