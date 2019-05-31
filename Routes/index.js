@@ -6,5 +6,7 @@
 var DemoBaseRoute = require('./demoRoute/demoBaseRoute');
 const StudentRoute = require('./studentRoute/studentRoute')
 const AgentRoute = require('./agentRoute/agentRoute')
-var APIs = [].concat(DemoBaseRoute, StudentRoute, AgentRoute);
+const CourseRoute = require('./courseRoute/courseRoute')
+
+var APIs = [].concat(DemoBaseRoute, StudentRoute, AgentRoute, CourseRoute);
 module.exports = APIs;
