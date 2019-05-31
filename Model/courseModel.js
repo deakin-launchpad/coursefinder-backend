@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-const autoIncrementModelID = require('./countIdModel');
+
 
 var courseSchema = new Schema({
   id: { type: Number, unique: true, min: 1 },
@@ -15,13 +15,5 @@ var courseSchema = new Schema({
  
 });
 
-courseSchema.pre('save', function (next) {
-  if (!this.isNew) {
-    next();
-    return;
-  }
-
-  autoIncrementModelID('courses', this, next);
-});
 
 module.exports = mongoose.model('course', courseSchema);
