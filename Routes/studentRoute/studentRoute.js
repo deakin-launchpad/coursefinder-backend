@@ -1,5 +1,5 @@
 /**
- * Created by Navit on 15/11/16.
+ * Created by Vibhav on 31/05/2019.
  */
 var UniversalFunctions = require("../../Utils/UniversalFunctions");
 var Joi = require("joi");
@@ -54,7 +54,7 @@ var registerStudent = {
           .min(8)
           .max(16)
           .required(),
-        interestedCourses: Joi.array().items(Joi.number())
+        interestedCourses: Joi.array().items(Joi.string())
       },
       failAction: UniversalFunctions.failActionFunction
     },
@@ -222,7 +222,7 @@ var updateStudent = {
         mobile: Joi.string()
           .trim()
           .regex(/^[0-9]{9}$/),
-        interestedCourses: Joi.array().items(Joi.number())
+        interestedCourses: Joi.array().items(Joi.string())
       },
       failAction: UniversalFunctions.failActionFunction
     },
@@ -235,5 +235,48 @@ var updateStudent = {
   }
 };
 
-var StudentRoutes = [registerStudent,studentLogin, getAllStudents, getStudent,updateStudent];
+var updateStudentCourseinterests = {
+  method: "PUT",
+  path: STUDENTAPI+"update/student/interestedcourses/{id}",
+  config: {
+    description: "Update Student API",
+    tags: ["api", "student"],
+    handler: function(request, h) {
+      var userData = request.payload;
+      var id = request.params.id;
+      return new Promise((resolve, reject) => {
+        Controller.StudentController.updateStudentCourseinterests(id, userData, function(
+          err,
+          data
+        ) {
+          if (err) reject(UniversalFunctions.sendError(err));
+          else
+            resolve(
+              UniversalFunctions.sendSuccess(
+                Config.APP_CONSTANTS.STATUS_MSG.SUCCESS.DEFAULT,
+                data
+              )
+            );
+        });
+      });
+    },
+    validate: {
+      params:{
+        id: Joi.string().required()
+      },
+      payload: {
+        interestedCourses: Joi.string().required()
+      },
+      failAction: UniversalFunctions.failActionFunction
+    },
+    plugins: {
+      "hapi-swagger": {
+        responseMessages:
+          UniversalFunctions.CONFIG.APP_CONSTANTS.swaggerDefaultResponseMessages
+      }
+    }
+  }
+};
+
+var StudentRoutes = [registerStudent,studentLogin, getAllStudents, getStudent,updateStudent, updateStudentCourseinterests];
 module.exports = StudentRoutes;
