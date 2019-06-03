@@ -14,7 +14,7 @@ const createNews = function (payloadData, callback) {
     async.series([
 
         function (cb) {
-            userData = payloadData
+            newsData = payloadData
             const criteria = { title: newsData.title }
             SERVICES.NEWSSERVICE.getRecord(criteria, {}, {}, (err, data) => {
                 if (err) cb(err)
@@ -23,11 +23,11 @@ const createNews = function (payloadData, callback) {
             })
         },
         function (cb) {
-            userData = payloadData
+            newsData = payloadData
             SERVICES.NEWSSERVICE.createRecord(payloadData, function (err, data) {
                 if (err) cb(err)
                 else {
-                    userData = data
+                    newsData = data
                     cb()
                 }
             })
@@ -35,7 +35,7 @@ const createNews = function (payloadData, callback) {
 
     ], function (err, result) {
         if (err) return callback(err)
-        else return callback(null, userData)
+        else return callback(null, newsData)
     })
 
 };
@@ -57,42 +57,41 @@ const getAllNews = function (callback) {
 }
 
 const getNews = function (payloadData, callback) {
-    var userData = payloadData
     const criteria = { _id: payloadData }
     const projections = {
-        '_id': 0,
+        '__v': 0,
     }
     SERVICES.NEWSSERVICE.getRecord(criteria, projections, {}, (err, data) => {
         if (err) return callback(err)
 
         else if (data && data.length > 0) return callback(null, data)
 
-        else return callback(ERROR.USER_NOT_FOUND)
+        else return callback(ERROR.DEFAULT)
     })
 }
 
 
 const updateNews = function (payloadData, callback) {
-    var userData;
+    var newsData;
     async.series([
 
         function (cb) {
-            userData = payloadData
-            const criteria = { email: userData.email }
+            newsData = payloadData
+            const criteria = { email: newsData.email }
             SERVICES.NEWSSERVICE.getRecord(criteria, {}, {}, (err, data) => {
                 if (err) cb(err)
                 else if (data && data.length > 0) cb()
-                else cb(ERROR.USER_NOT_FOUND)
+                else cb(ERROR.DEFAULT)
             })
         },
         function (cb) {
-            userData = payloadData
+            newsData = payloadData
             const criteria = { _id: payloadData.id }
 
-            SERVICES.NEWSSERVICE.updateRecord(criteria, userData, function (err, data) {
+            SERVICES.NEWSSERVICE.updateRecord(criteria, newsData, function (err, data) {
                 if (err) cb(err)
                 else {
-                    userData = data
+                    newsData = data
                     cb()
                 }
             })
@@ -100,7 +99,7 @@ const updateNews = function (payloadData, callback) {
 
     ], function (err, result) {
         if (err) return callback(err)
-        else return callback(null, userData)
+        else return callback(null, newsData)
     })
 }
 
