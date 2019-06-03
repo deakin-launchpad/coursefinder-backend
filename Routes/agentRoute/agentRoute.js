@@ -8,7 +8,7 @@ var Controller = require("../../Controllers");
 const STUDENTAPI = '/api/agent/v1/'
 var registerAgent = {
   method: "POST",
-  path: STUDENTAPI+"register/",
+  path: STUDENTAPI+"register",
   config: {
     description: "Register agent API",
     tags: ["api", "agent"],
@@ -55,7 +55,7 @@ var registerAgent = {
           .max(16)
           .required(),
         expertise: Joi.array().items(Joi.string()), 
-        interestedStudents: Joi.array().items(Joi.string())
+        interestedStudents: Joi.array().items(Joi.string().allow(''))
       },
       failAction: UniversalFunctions.failActionFunction
     },
@@ -70,7 +70,7 @@ var registerAgent = {
 
 var agentLogin = {
   method: "POST",
-  path: STUDENTAPI+"login/",
+  path: STUDENTAPI+"login",
   config: {
     description: "Login Agent API",
     tags: ["api", "agent"],
@@ -114,7 +114,7 @@ var agentLogin = {
 
 var getAllAgents = {
   method: "GET",
-  path: STUDENTAPI+"getallagents/",
+  path: STUDENTAPI+"getallagents",
   config: {
     description: "Get Agent API",
     tags: ["api", "agent"],
@@ -224,7 +224,7 @@ var updateAgent = {
           .trim()
           .regex(/^[0-9]{9}$/),
           expertise: Joi.array().items(Joi.string()), 
-          interestedStudents: Joi.array().items(Joi.string())
+          interestedStudents: Joi.array().items(Joi.string().allow(''))
       },
       failAction: UniversalFunctions.failActionFunction
     },
