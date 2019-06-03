@@ -8,7 +8,7 @@ var Controller = require("../../Controllers");
 const STUDENTAPI = '/api/student/v1/'
 var registerStudent = {
   method: "POST",
-  path: STUDENTAPI+"register/",
+  path: STUDENTAPI+"register",
   config: {
     description: "Register student API",
     tags: ["api", "student"],
@@ -54,7 +54,7 @@ var registerStudent = {
           .min(8)
           .max(16)
           .required(),
-        interestedCourses: Joi.array().items(Joi.string())
+        interestedCourses: Joi.array().items(Joi.string().allow(''))
       },
       failAction: UniversalFunctions.failActionFunction
     },
@@ -69,7 +69,7 @@ var registerStudent = {
 
 var studentLogin = {
   method: "POST",
-  path: STUDENTAPI+"login/",
+  path: STUDENTAPI+"login",
   config: {
     description: "Login Student API",
     tags: ["api", "student"],
@@ -113,7 +113,7 @@ var studentLogin = {
 
 var getAllStudents = {
   method: "GET",
-  path: STUDENTAPI+"getallstudents/",
+  path: STUDENTAPI+"getallstudents",
   config: {
     description: "Get Student API",
     tags: ["api", "student"],
