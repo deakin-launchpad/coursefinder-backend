@@ -142,15 +142,10 @@ const updateStudent = function(payloadData, callback){
   })
 }
 
-const updateStudentCourseinterests = function(id,payloadData, callback){
-  var userData = payloadData;
-  
-  if (id.match(/^[0-9a-fA-F]{24}$/)) {
-    console.log('[COURSES]',typeof id)
-
-  }
+const updateInterestedCourseStatus = function(id,payloadData, callback){
+  let userData = payloadData;
+  console.log('[USER DATA]', id)
   async.series([
-
     function (cb) {
       const criteria = { _id: id }
       SERVICES.STUDENTSERVICE.getRecord(criteria, {}, {}, (err, data) => {
@@ -168,9 +163,8 @@ const updateStudentCourseinterests = function(id,payloadData, callback){
       })
     },
     function (cb) {
-      userData = payloadData.interestedCourses
       const criteria = {_id: id}
-      SERVICES.STUDENTSERVICE.updateRecord(criteria, { $push: { interestedCourses: userData } }, function (err, data) {
+      SERVICES.STUDENTSERVICE.updateRecord(criteria, { $push: { applicationStatus: {courseid:userData.interestedCourses, status:userData.status} } }, function (err, data) {
         if (err) cb(err)
         else {
           userData = data
@@ -178,12 +172,49 @@ const updateStudentCourseinterests = function(id,payloadData, callback){
         }
       })
     }
-
   ], function (err, result) {
     if (err) return callback(err)
     else return callback(null, userData)
   })
 }
+
+
+const updateStudentCourseinterests = function(id,payloadData, callback){
+  let userData = payloadData;
+  console.log('[USER DATA]', id)
+  async.series([
+    function (cb) {
+      const criteria = { _id: id }
+      SERVICES.STUDENTSERVICE.getRecord(criteria, {}, {}, (err, data) => {
+        if (err) cb(err)
+        else if (data && data.length > 0) cb()
+        else cb(ERROR.USER_NOT_FOUND)
+      })
+    },
+    function (cb) {
+      const criteria = { _id:  userData.interestedCourses }
+      SERVICES.COURSESERVICE.getRecord(criteria, {}, {}, (err, data) => {
+        if (err) cb(err)
+        else if (data && data.length > 0) cb()
+        else cb(ERROR.NOT_FOUND)
+      })
+    },
+    function (cb) {
+      const criteria = {_id: id}
+      SERVICES.STUDENTSERVICE.updateRecord(criteria, { $push: { interestedCourses: userData.interestedCourses } }, function (err, data) {
+        if (err) cb(err)
+        else {
+          userData = data
+          cb()
+        }
+      })
+    }
+  ], function (err, result) {
+    if (err) return callback(err)
+    else return callback(null, userData)
+  })
+}
+
 
 module.exports = {
   registerStudent: registerStudent,
@@ -191,5 +222,6 @@ module.exports = {
   getAllStudents: getAllStudents,
   getStudent: getStudent,
   updateStudent: updateStudent,
-  updateStudentCourseinterests: updateStudentCourseinterests
+  updateStudentCourseinterests: updateStudentCourseinterests,
+  updateInterestedCourseStatus: updateInterestedCourseStatus
 };
