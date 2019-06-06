@@ -5,7 +5,7 @@ var UniversalFunctions = require("../../Utils/UniversalFunctions");
 var Joi = require("joi");
 var Config = require("../../Config");
 var Controller = require("../../Controllers");
-const STUDENTAPI = '/api/student/v1/'
+const STUDENTAPI = '/api/v1/students/'
 var registerStudent = {
   method: "POST",
   path: STUDENTAPI+"register",
@@ -278,5 +278,50 @@ var updateStudentCourseinterests = {
   }
 };
 
-var StudentRoutes = [registerStudent,studentLogin, getAllStudents, getStudent,updateStudent, updateStudentCourseinterests];
+var updateApplicationStatus = {
+  method: "PUT",
+  path: STUDENTAPI+"update/student/applicationstatus/course/{id}",
+  config: {
+    description: "Update Student API",
+    tags: ["api", "student"],
+    handler: function(request, h) {
+      var userData = request.payload;
+      var id = request.params.id;
+      return new Promise((resolve, reject) => {
+        console.log('[DATA]',userData)
+        Controller.StudentController.updateApplicationStatus(id, userData, function(
+          err,
+          data
+        ) {
+          if (err) reject(UniversalFunctions.sendError(err));
+          else
+            resolve(
+              UniversalFunctions.sendSuccess(
+                Config.APP_CONSTANTS.STATUS_MSG.SUCCESS.DEFAULT,
+                data
+              )
+            );
+        });
+      });
+    },
+    validate: {
+      params:{
+        id: Joi.string().required()
+      },
+      payload: {
+        interestedCourses: Joi.string().required(),
+        status: Joi.string().required()
+      },
+      failAction: UniversalFunctions.failActionFunction
+    },
+    plugins: {
+      "hapi-swagger": {
+        responseMessages:
+          UniversalFunctions.CONFIG.APP_CONSTANTS.swaggerDefaultResponseMessages
+      }
+    }
+  }
+};
+
+var StudentRoutes = [registerStudent,studentLogin, getAllStudents, getStudent,updateStudent, updateStudentCourseinterests, updateApplicationStatus];
 module.exports = StudentRoutes;

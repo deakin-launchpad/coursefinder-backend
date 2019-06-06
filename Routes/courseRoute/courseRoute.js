@@ -5,7 +5,7 @@ var UniversalFunctions = require("../../Utils/UniversalFunctions");
 var Joi = require("joi");
 var Config = require("../../Config");
 var Controller = require("../../Controllers");
-const COURSEAPI = '/api/course/v1/'
+const COURSEAPI = '/api/v1/course/'
 
 var insertCourse = {
     method: "POST",

@@ -5,7 +5,7 @@ var UniversalFunctions = require("../../Utils/UniversalFunctions");
 var Joi = require("joi");
 var Config = require("../../Config");
 var Controller = require("../../Controllers");
-const STUDENTAPI = '/api/agent/v1/'
+const STUDENTAPI = '/api/v1/agent/'
 var registerAgent = {
   method: "POST",
   path: STUDENTAPI+"register",
