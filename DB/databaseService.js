@@ -73,5 +73,10 @@ module.exports = class GenericDBService {
   aggregate(criteria, callback) {
     MODELS[this.name].aggregate(criteria, callback);
   }
+  populatedRecords(criteria,projection,populate,sortOptions,setOptions,callback){
+    MODELS[this.name].find(criteria).select(projection).populate(populate).sort(sortOptions).exec(function(err,result){
+      callback(err,result)
+    })
+  }
 
 }

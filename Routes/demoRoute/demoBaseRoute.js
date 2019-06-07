@@ -8,7 +8,7 @@ var Controller = require("../../Controllers");
 
 var demoApi = {
   method: "POST",
-  path: "/api/demo/demoApi/",
+  path: "/api/demo/demoApi",
   config: {
     description: "demo api",
     tags: ["api", "demo"],

@@ -43,6 +43,12 @@ var DATABASE = {
     },
     USER_ROLES:{
         USER:"USER"
+    },
+    APPLICATION_STATUS:{
+        STARTED: 'STARTED',
+        SUBMITTED: 'SUBMITTED',
+        UNDERREVIEW: 'UNDER REVIEW',
+        DONE: 'DONE'
     }
 };
 

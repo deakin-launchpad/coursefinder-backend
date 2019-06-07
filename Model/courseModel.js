@@ -2,26 +2,16 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-const autoIncrementModelID = require('./countIdModel');
+
 
 var courseSchema = new Schema({
-  id: { type: Number, unique: true, min: 1 },
   name: {type: String, required: true},
-  university:{ name: {type: String, required: true}, logo: {type:String}},
+  description: {type: String, required: true},
+  university:{ name: {type: String, required: true}, logo: {type:String}, location: {type: String, required: true}},
   contact:{ type: String},
+  courseLevel: {type: String, required: true},
   fees: {type: Number, required: true},
   department: {type: String, required: true},
-  website: { type: String}, 
- 
+  website: { type: String} 
 });
-
-courseSchema.pre('save', function (next) {
-  if (!this.isNew) {
-    next();
-    return;
-  }
-
-  autoIncrementModelID('courses', this, next);
-});
-
 module.exports = mongoose.model('course', courseSchema);

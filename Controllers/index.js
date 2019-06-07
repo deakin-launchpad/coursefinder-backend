@@ -4,5 +4,9 @@
 "use strict";
 module.exports = {
   DemoBaseController: require("./demoController/demoBaseController"),
-  StudentController: require('./studentControllers')
+  StudentController: require('./studentController/studentController'),
+  AgentController: require('./agentController/agentController'),
+  CourseController: require('./courseController/courseController'),
+  NewsController: require('./newsController/newsController'),
+  ApplicationController: require('./applicationController/applicationController')
 };
